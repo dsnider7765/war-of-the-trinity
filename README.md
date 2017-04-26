@@ -1,1 +1,1 @@
-# war-of-the-trinity
+# War of the Trinity
