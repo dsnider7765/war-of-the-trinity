@@ -1,0 +1,157 @@
+<types><non>non:
+is neutral against non
+is neutral against fire
+is neutral against water
+is neutral against electric
+is neutral against grass
+is neutral against ice
+is neutral against poison
+is neutral against ground
+is neutral against rock
+is neutral against dark
+is neutral against light
+is neutral against metal
+</non><fire>fire:
+is neutral against non
+is neutral against fire
+is 0.45 times weaker against water                
+is neutral against electric
+is 2 times stronger against grass                
+is 1.5 times stronger against ice                
+is 1.1 times stronger against poison                
+is 0.3 times weaker against ground                
+is 0.3 times weaker against rock                
+is neutral against dark
+is neutral against light
+is 1.1 times stronger against metal                
+</fire><water>water:
+is neutral against non
+is 2 times stronger against fire                
+is neutral against water
+is neutral against electric
+is 0.5 times weaker against grass                
+is 0.9 times weaker against ice                
+is neutral against poison
+is 0.8 times weaker against ground                
+is 1.2 times stronger against rock                
+is neutral against dark
+is neutral against light
+is 1.2 times stronger against metal                
+</water><electric>electric:
+is neutral against non
+is neutral against fire
+is 2 times stronger against water                
+is neutral against electric
+is neutral against grass
+is 1.5 times stronger against ice                
+is neutral against poison
+has no effect on ground
+has no effect on rock
+is neutral against dark
+is neutral against light
+is 0.3 times weaker against metal                
+</electric><grass>grass:
+is neutral against non
+is 0.5 times weaker against fire                
+is 2 times stronger against water                
+is 0.8 times weaker against electric                
+is 0.8 times weaker against grass                
+is 1.75 times stronger against ice                
+is 0.5 times weaker against poison                
+is 1.2 times stronger against ground                
+is 1.4 times stronger against rock                
+is neutral against dark
+is neutral against light
+is 0.9 times weaker against metal                
+</grass><ice>ice:
+is neutral against non
+is 1.5 times stronger against fire                
+is 1.1 times stronger against water                
+is 0.8 times weaker against electric                
+is 1.3 times stronger against grass                
+is neutral against ice
+is 1.2 times stronger against poison                
+is neutral against ground
+is 1.2 times stronger against rock                
+is neutral against dark
+is neutral against light
+is 1.2 times stronger against metal                
+</ice><poison>poison:
+is 2 times stronger against non                
+is neutral against fire
+is 0.5 times weaker against water                
+is neutral against electric
+is 1.5 times stronger against grass                
+is 0.8 times weaker against ice                
+is neutral against poison
+has no effect on ground
+has no effect on rock
+is neutral against dark
+is neutral against light
+has no effect on metal
+</poison><ground>ground:
+is neutral against non
+is 1.9 times stronger against fire                
+is 1.2 times stronger against water                
+is 2 times stronger against electric                
+is 0.8 times weaker against grass                
+is neutral against ice
+is 2 times stronger against poison                
+is neutral against ground
+is 0.8 times weaker against rock                
+is neutral against dark
+is neutral against light
+is 0.2 times weaker against metal                
+</ground><rock>rock:
+is neutral against non
+is 1.7 times stronger against fire                
+is 0.7 times weaker against water                
+is 2 times stronger against electric                
+is 0.7 times weaker against grass                
+is neutral against ice
+is 2 times stronger against poison                
+is 1.2 times stronger against ground                
+is neutral against rock
+is neutral against dark
+is neutral against light
+is 0.2 times weaker against metal                
+</rock><dark>dark:
+is 1.5 times stronger against non                
+is 1.5 times stronger against fire                
+is 1.5 times stronger against water                
+is 1.5 times stronger against electric                
+is 1.5 times stronger against grass                
+is 1.5 times stronger against ice                
+is 1.5 times stronger against poison                
+is 1.5 times stronger against ground                
+is 1.5 times stronger against rock                
+is 1.5 times stronger against dark                
+has no effect on light
+is 1.5 times stronger against metal                
+</dark><light>light:
+is neutral against non
+is neutral against fire
+is neutral against water
+is neutral against electric
+is neutral against grass
+is neutral against ice
+is neutral against poison
+is neutral against ground
+is neutral against rock
+is 4 times stronger against dark                
+is neutral against light
+is neutral against metal
+</light><metal>metal:
+is neutral against non
+is neutral against fire
+is neutral against water
+is 1.7 times stronger against electric                
+is neutral against grass
+is neutral against ice
+is 1.5 times stronger against poison                
+is 1.5 times stronger against ground                
+is 1.5 times stronger against rock                
+is neutral against dark
+is neutral against light
+is neutral against metal
+</metal></types>
