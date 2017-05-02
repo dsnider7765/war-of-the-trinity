@@ -14,6 +14,7 @@ public class WOTT extends Game {
 	
 	@Override
 	public void create () {
+		Gdx.graphics.setTitle("War of the Trinity");
 		setScreen(new MainScreen(this));
 	}
 
