@@ -26,18 +26,35 @@ public class MainScreen implements Screen{
     OrthographicCamera camera;
     WOTT game;
     TiledMap map;
+    OrthogonalTiledMapRenderer mapRenderer;
+
+    // DEBUG STUFF
+    private float speedX = 1.0f;
+    private float speedY = 1;
 
     public MainScreen(WOTT game){
         this.game = game;
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 640, 480);
+        camera.setToOrtho(false, 3200, 3200);
 
         TmxMapLoader loader = new TmxMapLoader();
         System.out.println(Gdx.files.absolute("theMap.tmx"));
         map = loader.load("maps/python/theMap.tmx");
 
+        System.out.println(map.getProperties().get("width"));
+        Iterator<String> keys = map.getProperties().getKeys();
+        while(keys.hasNext()) {
+            System.out.println(keys.next());
+        }
+        System.out.println(map.getProperties().get("height"));
+
+        mapRenderer = new OrthogonalTiledMapRenderer(map, batch);
+        mapRenderer.setView(camera);
+
+        System.out.println(Float.parseFloat(map.getProperties().get("height").toString()));
+        System.out.println(speedX);
     }
 
     @Override
@@ -47,10 +64,20 @@ public class MainScreen implements Screen{
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        OrthogonalTiledMapRenderer mapRenderer = new OrthogonalTiledMapRenderer(map, batch);
+        if (camera.position.x / mapRenderer.getUnitScale() >= Float.parseFloat(map.getProperties().get("width").toString())) {
+            speedX = -speedX;
+        }
+        if (camera.position.y / mapRenderer.getUnitScale() >= Float.parseFloat(map.getProperties().get("height").toString())) {
+            speedY = -speedY;
+        }
+
+
+        camera.translate(speedX,0);
+        camera.update();
+
         mapRenderer.setView(camera);
 
         mapRenderer.render();
