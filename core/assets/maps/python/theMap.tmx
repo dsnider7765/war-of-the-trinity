@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Batch 1" tilewidth="32" tileheight="32">
+  <image source="hyptosis_tile-art-batch-1.png" width="960" height="960"/>
+ </tileset>
+ <tileset firstgid="901" name="Batch 2" tilewidth="32" tileheight="32">
+  <image source="hyptosis_til-art-batch-2.png" width="960" height="960"/>
+ </tileset>
+ <tileset firstgid="1801" name="Batch 3" tilewidth="32" tileheight="32">
+  <image source="hyptosis_tile-art-batch-3.png" width="960" height="960"/>
+ </tileset>
+ <tileset firstgid="2701" name="Batch 4" tilewidth="32" tileheight="32">
+  <image source="hyptosis_tile-art-batch-4.png" width="960" height="960"/>
+ </tileset>
+ <tileset firstgid="3601" name="Batch 5" tilewidth="16" tileheight="16">
+  <image source="hyptosis_tile-art-batch-5.png" width="636" height="1219"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1NsJwgAUBcFg/+2odfhIHfHRgNciAhPYjyngsHDOp2W5hHAdj/EMYa0HpR6WeljqYamHZY8er7EB245ojx73cQO2HVF/ZamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamHpR6WeljqYamH5d/jPT4hfMcP5z+pcw==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="100" height="100">
+  <properties>
+   <property name="Collision" value="True"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt0c1NAmEYhdEBRGmFPq2EFYjSgVE3/NqBATaoQAfuvBWQyceCQc9JnuVMZt5bVc3Vv/QHXKlhq6pG6SGN02N6SpPWee+1R5lp7j5L87RIy7RK7wV7PNeI03a5+2f6St9pnw7pWLDHR41K3LcLH7xC7fxrJ92kbrpNd6lXcIOfGpUY/KM9mu4lW7ymN5s0wjo7bNLWHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwB/0C/48Lj8=
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1UkKwkAQBdDWXMMLeG+nS7hxuoQbp0u4iZagGIKKGjUR3oMPDQVNqKI6KTVX9wN39Nop9SODyDAyan/gUt42if5PI7PIPLIwj1qtov/ryCayjezO88jNpRanvh9Ovc9SamXXOXSyWj/rb4wr1svKfTeH1ywr1osevUneq+fsK9aLHu2CPfm9/Ma/+96Z77vsQHEX7p0BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGi2IxUWHAU=
+  </data>
+ </layer>
+ <layer name="Tile Layer 4" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1LEJACAMBEAR3H8iJ3ESO1tBbRQR5K4K+eabJAQAeC/F1w3gX7mbZ7eWxxUXlcN8xR/dUw9zAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD+1AC+zAU4
+  </data>
+ </layer>
+ <objectgroup name="Hit Boxes" width="0" height="0">
+  <object name="Computer Hit Box" x="544" y="32" width="224" height="96"/>
+  <object name="Test Tubes Back Row" x="1152" y="128" width="288" height="32"/>
+  <object name="Test Tube Middle Left" x="1152" y="192" width="32" height="32"/>
+  <object name="Test Tube Middle Right" x="1408" y="192" width="32" height="32"/>
+  <object name="Test Tube Front Left" x="1152" y="256" width="32" height="32"/>
+  <object name="Test Tube Front Right" x="1408" y="256" width="32" height="32"/>
+  <object name="Corn" x="1920" y="128" width="32" height="32"/>
+  <object name="Corn" x="1984" y="96" width="32" height="32"/>
+  <object name="Corn" x="1984" y="192" width="32" height="32"/>
+  <object name="Corn" x="2016" y="256" width="32" height="32"/>
+  <object name="Corn" x="1920" y="256" width="32" height="32"/>
+  <object name="Corn" x="1824" y="256" width="32" height="32"/>
+  <object name="Corn" x="1760" y="256" width="32" height="32"/>
+  <object name="Corn" x="1760" y="192" width="32" height="32"/>
+  <object name="Corn" x="1792" y="128" width="32" height="32"/>
+  <object name="Tree Hit Box" x="1824" y="160" width="96" height="64"/>
+  <object name="Computer Hit Box" x="544" y="128" width="64" height="32"/>
+  <object name="Computer Hit Box" x="704" y="128" width="64" height="32"/>
+ </objectgroup>
+</map>
