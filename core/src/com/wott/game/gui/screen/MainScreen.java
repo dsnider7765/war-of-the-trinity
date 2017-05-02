@@ -37,10 +37,7 @@ public class MainScreen implements Screen{
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        TmxMapLoader loader = new TmxMapLoader();
-        System.out.println(Gdx.files.absolute("theMap.tmx"));
-        map = loader.load("maps/talon/theMap.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(map, batch);
+        loadMap("maps/talon/theMap.tmx");
 
         camera.setToOrtho(false, 19 * Float.parseFloat(map.getProperties().get("tilewidth").toString()),
                 19 * Float.parseFloat(map.getProperties().get("tileheight").toString()));
@@ -56,6 +53,12 @@ public class MainScreen implements Screen{
 
         System.out.println(Float.parseFloat(map.getProperties().get("height").toString()));
         System.out.println(speedX);
+    }
+
+    public void loadMap(String path){
+        TmxMapLoader loader = new TmxMapLoader();
+        map = loader.load(path);
+        mapRenderer = new OrthogonalTiledMapRenderer(map, batch);
     }
 
     @Override
