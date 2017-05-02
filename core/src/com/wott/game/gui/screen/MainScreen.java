@@ -37,20 +37,21 @@ public class MainScreen implements Screen{
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 3200, 3200);
-
         TmxMapLoader loader = new TmxMapLoader();
         System.out.println(Gdx.files.absolute("theMap.tmx"));
-        map = loader.load("maps/python/theMap.tmx");
+        map = loader.load("maps/talon/theMap.tmx");
+        mapRenderer = new OrthogonalTiledMapRenderer(map, batch);
 
-        System.out.println(map.getProperties().get("width"));
+        camera.setToOrtho(false, 19 * Float.parseFloat(map.getProperties().get("tilewidth").toString()),
+                19 * Float.parseFloat(map.getProperties().get("tileheight").toString()));
+
         Iterator<String> keys = map.getProperties().getKeys();
         while(keys.hasNext()) {
             System.out.println(keys.next());
         }
         System.out.println(map.getProperties().get("height"));
 
-        mapRenderer = new OrthogonalTiledMapRenderer(map, batch);
+
         mapRenderer.setView(camera);
 
         System.out.println(Float.parseFloat(map.getProperties().get("height").toString()));
@@ -75,7 +76,7 @@ public class MainScreen implements Screen{
         }
 
 
-        camera.translate(speedX,0);
+        //camera.translate(speedX,0);
         camera.update();
 
         mapRenderer.setView(camera);
@@ -87,7 +88,14 @@ public class MainScreen implements Screen{
 
     @Override
     public void resize(int width, int height) {
+        int tilesSide = Math.round(width / Float.parseFloat(map.getProperties().get("tilewidth").toString()));
+        int tilesUpDown = Math.round(height / Float.parseFloat(map.getProperties().get("tileheight").toString()));
 
+        float newWidth = tilesSide * Float.parseFloat(map.getProperties().get("tilewidth").toString());
+        float newHeight = tilesUpDown * Float.parseFloat(map.getProperties().get("tileheight").toString());
+
+        camera.setToOrtho(false, newWidth, newHeight);
+        camera.position.set(newWidth / 2, newHeight / 2, 0);
     }
 
     @Override
