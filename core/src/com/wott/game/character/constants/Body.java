@@ -1,4 +1,4 @@
-package com.wott.game.character;
+package com.wott.game.character.constants;
 
 import java.util.HashMap;
 
