@@ -1,9 +1,11 @@
 package com.wott.game.gui.screen;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -20,7 +22,7 @@ import com.wott.game.game.encounter.Encounter;
 /**
  * Created by student on 5/1/17.
  */
-public class MainScreen implements Screen, InputProcessor{
+public class MainScreen implements Screen, InputProcessor {
     // Data Stuff
     private WOTT game;
     private Encounter[] mEncounters;
@@ -36,7 +38,7 @@ public class MainScreen implements Screen, InputProcessor{
     private int collisionLayer;
     private static final int nothingSelected = -5270;
 
-    public MainScreen(WOTT game, String mapPath){
+    public MainScreen(WOTT game, String mapPath) {
         this.game = game;
 
         batch = new SpriteBatch();
@@ -66,11 +68,11 @@ public class MainScreen implements Screen, InputProcessor{
         mapRenderer.setView(camera);
     }
 
-    private boolean checkForCollision(Vector2 position, Rectangle hitbox){
+    private boolean checkForCollision(Vector2 position, Rectangle hitbox) {
         boolean hasCollided = false;
 
         MapObjects mapObjects = map.getLayers().get(collisionLayer).getObjects();
-        for (RectangleMapObject mapObject: mapObjects.getByType(RectangleMapObject.class)) {
+        for (RectangleMapObject mapObject : mapObjects.getByType(RectangleMapObject.class)) {
             hasCollided = Intersector.overlaps(hitbox, mapObject.getRectangle());
             if (hasCollided) break;
         }
@@ -80,7 +82,7 @@ public class MainScreen implements Screen, InputProcessor{
     /**
      * Checks if the player's sprite is overlapping something.
      */
-    private void checkForMovementCollision(Vector2 moveVector){
+    private void checkForMovementCollision(Vector2 moveVector) {
         System.out.println("Checking for Collision");
         boolean hasCollided = false;
 
@@ -92,13 +94,13 @@ public class MainScreen implements Screen, InputProcessor{
         MapObjects mapObjects = map.getLayers().get(collisionLayer).getObjects();
 
 
-        for (RectangleMapObject mapObject: mapObjects.getByType(RectangleMapObject.class)) {
+        for (RectangleMapObject mapObject : mapObjects.getByType(RectangleMapObject.class)) {
             Rectangle hitBox = mapObject.getRectangle();
             hasCollided = Intersector.overlaps(playerHitBox, hitBox);
             if (hasCollided) break;
         }
 
-        for (Encounter encounter: mEncounters) {
+        for (Encounter encounter : mEncounters) {
             Rectangle hitBox = encounter.getSprite().getBoundingRectangle();
             hasCollided = Intersector.overlaps(hitBox, playerHitBox);
             if (hasCollided) break;
@@ -119,13 +121,12 @@ public class MainScreen implements Screen, InputProcessor{
         if (hasCollided) {
             System.out.println("Collided!");
             camera.position.set(oldPos, 0);
-        }
-        else {
+        } else {
             camera.position.set(newPos, 0);
         }
     }
 
-    private void loadMap(String path){
+    private void loadMap(String path) {
         TmxMapLoader loader = new TmxMapLoader();
         map = loader.load(path);
         mapRenderer = new OrthogonalTiledMapRenderer(map, batch);
@@ -134,10 +135,6 @@ public class MainScreen implements Screen, InputProcessor{
         game.getPlayer().getSprite().setPosition(camera.position.x, camera.position.y);
 
         collisionLayer = map.getLayers().getCount() - 1;
-    }
-
-    private void fadeOut(){
-
     }
 
     @Override
@@ -151,22 +148,6 @@ public class MainScreen implements Screen, InputProcessor{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         Vector2 moveVector = new Vector2(0, 0);
-
-        // Handle movement
-//        switch (keyCode) {
-//            case Input.Keys.LEFT:
-//                moveVector.set(-300 * delta, 0);
-//                break;
-//            case Input.Keys.RIGHT:
-//                moveVector.set(300 * delta, 0);
-//                break;
-//            case Input.Keys.UP:
-//                moveVector.set(0, 300 * delta);
-//                break;
-//            case Input.Keys.DOWN:
-//                moveVector.set(0, -300 * delta);
-//                break;
-//        }
 
         float speed = 300;
         if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
@@ -196,7 +177,7 @@ public class MainScreen implements Screen, InputProcessor{
 
         mapRenderer.render();
         batch.begin();
-        for (Encounter encounter: mEncounters) {
+        for (Encounter encounter : mEncounters) {
             encounter.getSprite().draw(batch);
         }
         game.getPlayer().getSprite().draw(batch);
