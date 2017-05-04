@@ -1,6 +1,6 @@
-#Main
-#David Snider with help from Cavanaugh Richards
-#Started on 4/13/16 
+# Main
+# David Snider with help from Cavanaugh Richards
+# Started on 4/13/16
 
 import pygame
 from pytmx import load_pygame
