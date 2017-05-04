@@ -19,7 +19,7 @@ public class WOTT extends Game {
 		setPlayer(new Player());
 
 		Gdx.graphics.setTitle("War of the Trinity");
-		setScreen(new MainScreen(this));
+		setScreen(new MainScreen(this, Gdx.files.internal("maps/talon/theMap.tmx").file().getAbsolutePath()));
 		Gdx.input.setInputProcessor((InputProcessor) getScreen());
 	}
 

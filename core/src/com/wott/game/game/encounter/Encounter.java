@@ -12,9 +12,7 @@ public class Encounter {
     private Sprite mSprite;
 
     public Encounter(){
-        Texture texture = new Texture(Gdx.files.internal("sprites/DEBUG-encounter.png"));
-        TextureRegion textureRegion = new TextureRegion(texture, 100, 100);
-        mSprite = new Sprite(textureRegion);
+        mSprite = new Sprite(new Texture(Gdx.files.internal("sprites/Generic Test Encounter.png")));
     }
 
     public Sprite getSprite() {
