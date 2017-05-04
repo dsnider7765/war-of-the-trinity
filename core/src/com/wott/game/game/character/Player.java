@@ -1,4 +1,4 @@
-package com.wott.game.character;
+package com.wott.game.game.character;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

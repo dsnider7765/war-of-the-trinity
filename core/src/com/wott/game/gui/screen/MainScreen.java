@@ -102,22 +102,35 @@ public class MainScreen implements Screen, InputProcessor{
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        Vector2 moveVector = new Vector2();
+        Vector2 moveVector = new Vector2(0, 0);
 
         // Handle movement
-        switch (keyCode) {
-            case Input.Keys.LEFT:
-                moveVector.set(-300 * delta, 0);
-                break;
-            case Input.Keys.RIGHT:
-                moveVector.set(300 * delta, 0);
-                break;
-            case Input.Keys.UP:
-                moveVector.set(0, 300 * delta);
-                break;
-            case Input.Keys.DOWN:
-                moveVector.set(0, -300 * delta);
-                break;
+//        switch (keyCode) {
+//            case Input.Keys.LEFT:
+//                moveVector.set(-300 * delta, 0);
+//                break;
+//            case Input.Keys.RIGHT:
+//                moveVector.set(300 * delta, 0);
+//                break;
+//            case Input.Keys.UP:
+//                moveVector.set(0, 300 * delta);
+//                break;
+//            case Input.Keys.DOWN:
+//                moveVector.set(0, -300 * delta);
+//                break;
+//        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            moveVector.add(-300 * delta, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            moveVector.add(300 * delta, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            moveVector.add(0, 300 * delta);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            moveVector.add(0, -300 * delta);
         }
         checkForCollision(moveVector);
         camera.update();

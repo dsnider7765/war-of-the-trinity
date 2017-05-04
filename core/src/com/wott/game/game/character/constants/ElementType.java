@@ -1,4 +1,4 @@
-package com.wott.game.character.constants;
+package com.wott.game.game.character.constants;
 
 /**
  * Created by student on 4/28/17.
