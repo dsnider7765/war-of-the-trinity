@@ -1,62 +1,89 @@
 package com.wott.game.gui.screen;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.BatchTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.wott.game.WOTT;
-
-import java.util.ArrayList;
-import java.util.Iterator;
+import com.wott.game.game.encounter.Encounter;
 
 /**
  * Created by student on 5/1/17.
  */
-public class MainScreen implements Screen, InputProcessor{
-    SpriteBatch batch;
-    OrthographicCamera camera;
-    WOTT game;
-    TiledMap map;
-    OrthogonalTiledMapRenderer mapRenderer;
+public class MainScreen implements Screen, InputProcessor {
+    // Data Stuff
+    private WOTT game;
+    private Encounter[] mEncounters;
 
-    // Input stuff
-    int keyCode;
-    int collisionLayer = 4;
+    // Render Stuff
+    private SpriteBatch batch;
+    private OrthographicCamera camera;
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer mapRenderer;
 
-    // DEBUG STUFF
+    // Input Stuff
+    private int keyCode;
+    private int collisionLayer;
     private static final int nothingSelected = -5270;
 
-    public MainScreen(WOTT game){
+    public MainScreen(WOTT game, String mapPath) {
         this.game = game;
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        loadMap(Gdx.files.internal("maps/talon/theMap.tmx").file().getAbsolutePath());
+
+        loadMap(Gdx.files.internal(mapPath).file().getAbsolutePath());
+        collisionLayer = map.getLayers().getCount() - 1;
+
+        mEncounters = new Encounter[5];
+        for (int i = 0; i < 5; i++) {
+            mEncounters[i] = new Encounter();
+            boolean isSafe = false;
+            Vector2 newPos = new Vector2();
+            while (!isSafe) {
+                int mapWidth = (int) (Math.round(Float.parseFloat(map.getProperties().get("tilewidth").toString())) * Float.parseFloat(map.getProperties().get("width").toString()));
+                int mapHeight = (int) (Math.round(Float.parseFloat(map.getProperties().get("tileheight").toString())) * Float.parseFloat(map.getProperties().get("height").toString()));
+                int xPos = MathUtils.random(50, mapWidth - 200);
+                int yPos = MathUtils.random(50, mapHeight - 50);
+
+                newPos = new Vector2(xPos, yPos);
+
+                isSafe = !checkForCollision(newPos, mEncounters[i].getSprite().getBoundingRectangle());
+            }
+            mEncounters[i].getSprite().setPosition(newPos.x, newPos.y);
+        }
 
         mapRenderer.setView(camera);
+    }
+
+    private boolean checkForCollision(Vector2 position, Rectangle hitbox) {
+        boolean hasCollided = false;
+
+        MapObjects mapObjects = map.getLayers().get(collisionLayer).getObjects();
+        for (RectangleMapObject mapObject : mapObjects.getByType(RectangleMapObject.class)) {
+            hasCollided = Intersector.overlaps(hitbox, mapObject.getRectangle());
+            if (hasCollided) break;
+        }
+        return hasCollided;
     }
 
     /**
      * Checks if the player's sprite is overlapping something.
      */
-    private void checkForCollision(Vector2 moveVector){
-        System.out.print("Starting collsion check...");
+    private void checkForMovementCollision(Vector2 moveVector) {
+        System.out.println("Checking for Collision");
         boolean hasCollided = false;
 
         Rectangle playerHitBox = game.getPlayer().getSprite().getBoundingRectangle();
@@ -67,29 +94,47 @@ public class MainScreen implements Screen, InputProcessor{
         MapObjects mapObjects = map.getLayers().get(collisionLayer).getObjects();
 
 
-        for (RectangleMapObject mapObject: mapObjects.getByType(RectangleMapObject.class)) {
+        for (RectangleMapObject mapObject : mapObjects.getByType(RectangleMapObject.class)) {
             Rectangle hitBox = mapObject.getRectangle();
             hasCollided = Intersector.overlaps(playerHitBox, hitBox);
             if (hasCollided) break;
         }
 
+        for (Encounter encounter : mEncounters) {
+            Rectangle hitBox = encounter.getSprite().getBoundingRectangle();
+            hasCollided = Intersector.overlaps(hitBox, playerHitBox);
+            if (hasCollided) break;
+        }
+
+        int mapWidth = (int) (Math.round(Float.parseFloat(map.getProperties().get("tilewidth").toString())) * Float.parseFloat(map.getProperties().get("width").toString()));
+        int mapHeight = (int) (Math.round(Float.parseFloat(map.getProperties().get("tileheight").toString())) * Float.parseFloat(map.getProperties().get("height").toString()));
+
+        if (!hasCollided) {
+            if (newPos.x < 0 || newPos.x + playerHitBox.getWidth() >= mapWidth) {
+                hasCollided = true;
+            }
+            if (newPos.y < 0 || newPos.y + playerHitBox.getHeight() >= mapHeight) {
+                hasCollided = true;
+            }
+        }
+
         if (hasCollided) {
             System.out.println("Collided!");
             camera.position.set(oldPos, 0);
-        }
-        else {
-            System.out.println("Clear!");
+        } else {
             camera.position.set(newPos, 0);
         }
     }
 
-    private void loadMap(String path){
+    private void loadMap(String path) {
         TmxMapLoader loader = new TmxMapLoader();
         map = loader.load(path);
         mapRenderer = new OrthogonalTiledMapRenderer(map, batch);
         camera.setToOrtho(false, 19 * Float.parseFloat(map.getProperties().get("tilewidth").toString()),
                 19 * Float.parseFloat(map.getProperties().get("tileheight").toString()));
         game.getPlayer().getSprite().setPosition(camera.position.x, camera.position.y);
+
+        collisionLayer = map.getLayers().getCount() - 1;
     }
 
     @Override
@@ -104,36 +149,27 @@ public class MainScreen implements Screen, InputProcessor{
 
         Vector2 moveVector = new Vector2(0, 0);
 
-        // Handle movement
-//        switch (keyCode) {
-//            case Input.Keys.LEFT:
-//                moveVector.set(-300 * delta, 0);
-//                break;
-//            case Input.Keys.RIGHT:
-//                moveVector.set(300 * delta, 0);
-//                break;
-//            case Input.Keys.UP:
-//                moveVector.set(0, 300 * delta);
-//                break;
-//            case Input.Keys.DOWN:
-//                moveVector.set(0, -300 * delta);
-//                break;
-//        }
+        float speed = 300;
+        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
+            speed = speed * 5;
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            moveVector.add(-300 * delta, 0);
+            moveVector.add(-speed * delta, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            moveVector.add(300 * delta, 0);
+            moveVector.add(speed * delta, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            moveVector.add(0, 300 * delta);
+            moveVector.add(0, speed * delta);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            moveVector.add(0, -300 * delta);
+            moveVector.add(0, -speed * delta);
         }
-        checkForCollision(moveVector);
-        camera.update();
+        if (!moveVector.isZero()) {
+            checkForMovementCollision(moveVector);
+            camera.update();
+        }
 
         game.getPlayer().getSprite().setPosition(camera.position.x, camera.position.y);
 
@@ -141,6 +177,9 @@ public class MainScreen implements Screen, InputProcessor{
 
         mapRenderer.render();
         batch.begin();
+        for (Encounter encounter : mEncounters) {
+            encounter.getSprite().draw(batch);
+        }
         game.getPlayer().getSprite().draw(batch);
         batch.end();
     }
@@ -193,7 +232,7 @@ public class MainScreen implements Screen, InputProcessor{
                 keyCode = Input.Keys.DOWN;
                 break;
             case Input.Keys.HOME:
-                loadMap(Gdx.files.internal("maps/talon/theMap.tmx").file().getAbsolutePath());
+                loadMap(Gdx.files.internal("maps/world-map/worldMap.tmx").file().getAbsolutePath());
                 break;
         }
         return false;
